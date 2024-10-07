@@ -92,6 +92,20 @@ class ConfidenceModel(nn.Module):
         return confidence
 
 
+class SimilarityModel(nn.Module):
+    def __init__(self, inputDim, hiddenDim, embeddingSize):
+        super().__init__()
+
+        self.fc1 = nn.Linear(inputDim, hiddenDim)
+        self.fc2 = nn.Linear(hiddenDim, embeddingSize)
+
+    def forward(self, vector):
+        x = torch.relu(self.fc1(vector))
+        x = torch.tanh(self.fc2(x))
+        return x
+
+
+
 if __name__ == '__main__':
     learning_rate = 0.001
     num_epochs = 100
